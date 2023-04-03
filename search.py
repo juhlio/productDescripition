@@ -1,6 +1,11 @@
 from dotenv import load_dotenv
 import os
 import openai
+from openpyxl import Workbook, load_workbook
+
+filename = './src/Produtos.xlsx'
+wb = load_workbook(filename = filename)
+ws = wb.active
 
 # carrega as variáveis do arquivo .env
 load_dotenv()
@@ -9,6 +14,7 @@ class Search:
 
     def __init__(self, product):
         self.product = product
+
 
 
     def get_description(self):
@@ -22,8 +28,12 @@ class Search:
             presence_penalty=0.0,
         )
         produto = {"name": self.product, "description": response.choices[0].text}
+        proxima_linha = ws.max_row + 1
+        ws.cell(row=proxima_linha, column=1).value = self.product
+        ws.cell(row=proxima_linha, column=2).value = response.choices[0].text
+        wb.save(filename=filename)
         return produto
 
 
-    def __str__(self):
-        return self.product
+    # def __str__(self):
+    #     return self
