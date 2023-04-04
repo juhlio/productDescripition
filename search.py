@@ -20,7 +20,7 @@ class Search:
     def get_description(self):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         response = openai.Completion.create(
-            model="text-davinci-003",
+            model="text-curie-001",
             prompt=f"Faz uma descrição deste produto: {self.product}",
             temperature=0,
             max_tokens=250,
