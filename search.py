@@ -3,9 +3,7 @@ import os
 import openai
 from openpyxl import Workbook, load_workbook
 
-filename = './src/Produtos.xlsx'
-wb = load_workbook(filename = filename)
-ws = wb.active
+
 
 # carrega as variáveis do arquivo .env
 load_dotenv()
@@ -17,17 +15,22 @@ class Search:
 
 
 
-    def get_description(self):
+
+    def get_description(self, planilha):
         openai.api_key = os.getenv("OPENAI_API_KEY")
         response = openai.Completion.create(
-            model="text-curie-001",
-            prompt=f"Faz uma descrição deste produto: {self.product}",
+            model="text-davinci-003",
+            prompt=f"Faça uma descrição completa deste produto e coloque sua ficha técnica: {self.product}",
             temperature=0,
-            max_tokens=250,
+            max_tokens=500,
             frequency_penalty=0.0,
             presence_penalty=0.0,
         )
-        produto = {"name": self.product, "description": response.choices[0].text}
+        filename = f'./src/{planilha}'
+        print(f"filename -> {filename}")
+        wb = load_workbook(filename=filename)
+        ws = wb.active
+        produto = response.choices[0].text
         proxima_linha = ws.max_row + 1
         ws.cell(row=proxima_linha, column=1).value = self.product
         ws.cell(row=proxima_linha, column=2).value = response.choices[0].text
@@ -35,5 +38,5 @@ class Search:
         return produto
 
 
-    # def __str__(self):
-    #     return self
+    def __str__(self):
+        return self.product
