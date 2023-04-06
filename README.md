@@ -12,7 +12,7 @@ Depois de adicionar todas as descrições, você pode clicar no botão "Abrir Pl
 ## Requisitos
 
 Python 3.x
-Bibliotecas PySimpleGUI, Openpyxl e Requests
+Bibliotecas PySimpleGUI, Openpyxl, Openai e Requests
 
 ## Como instalar as Bibliotecas
 
@@ -25,9 +25,11 @@ Para instalar as bibliotecas necessárias, você pode utilizar o pip, o gerencia
   pip install PySimpleGUI
   pip install openpyxl
   pip install requests
+  pip install openai
 ```
 
-
+## Antes de usar
+Crie uma chave de api na OpenAi e coloque no seu arquivo .env
     
 ## Contribuindo
 
